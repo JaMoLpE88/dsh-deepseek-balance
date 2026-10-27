@@ -1,0 +1,10 @@
+@jamolpe88/dsh-deepseek-balance
+Copyright (c) 2026 JaMoLpE88
+
+The DeepSeek name and the DeepSeek logo are trademarks of DeepSeek. The logo
+in `icon.svg` and inside the composer pill is used only to identify the
+DeepSeek Platform service in this plugin's interface. It is not covered by
+this project's MIT license, which applies to the source code only.
+
+Logo source:
+https://api-docs.deepseek.com/img/logo-mark-light.svg

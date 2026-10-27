@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "DeepSeek Balance",
+    "description": "Shows your DeepSeek Platform topped-up and granted balance per currency in the composer. Appears only while a DeepSeek model is selected; no configuration needed."
+  }
+}

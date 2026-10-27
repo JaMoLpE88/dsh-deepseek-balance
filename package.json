@@ -1,0 +1,70 @@
+{
+  "name": "@jamolpe88/dsh-deepseek-balance",
+  "version": "0.1.0",
+  "description": "DeepSeek Platform balance in the DeepSeek Harness composer: topped-up and granted balance per currency with a click-open details panel. Zero configuration.",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "dsh-plugin",
+    "deepseek",
+    "balance",
+    "credits",
+    "composer"
+  ],
+  "license": "MIT",
+  "author": "JaMoLpE88",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JaMoLpE88/dsh-deepseek-balance.git"
+  },
+  "homepage": "https://github.com/JaMoLpE88/dsh-deepseek-balance#readme",
+  "bugs": {
+    "url": "https://github.com/JaMoLpE88/dsh-deepseek-balance/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22",
+    "dsh": ">=0.2.1-rc.3"
+  },
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  },
+  "files": [
+    "index.js",
+    "balance.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "assets/*.png",
+    "NOTICE",
+    "README.md",
+    "README.es.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "check": "node --check index.js && node --check balance.js && node --check client.js",
+    "test": "node --test"
+  }
+}
