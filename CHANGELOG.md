@@ -2,6 +2,11 @@
 
 All notable changes to `@jamolpe88/dsh-deepseek-balance` are documented here.
 
+## 0.1.1 — 2026-10-27
+
+- The pill joins the shared centered pill group used by the other JaMoLpE88 composer plugins (OpenCode Go usage and DeepSeek rate clock). Several visible pills sit side by side, centered, with a small gap; they hide together when the composer cannot fit them, instead of overlapping the model selector.
+- README positioning notes updated. No other runtime changes.
+
 ## 0.1.0 — 2026-10-27
 
 - First release.

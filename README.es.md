@@ -7,7 +7,7 @@
 [![platform](https://img.shields.io/badge/platform-Windows%2011-0078D6?style=flat-square)](#compatibilidad)
 [![dsh-plugin.org](https://dsh-plugin.org/badges/listed.svg)](https://dsh-plugin.org/plugins/jamolpe88/dsh-deepseek-balance)
 
-**Saldo de DeepSeek Platform en el compositor de DeepSeek Harness.** Cada divisa con saldo de la cuenta vive en una píldora compacta entre el control de permisos y el selector de modelo; al pulsarla se abre un panel con el saldo recargado, el regalado y el total por divisa, el total combinado y los enlaces oficiales de uso y recarga.
+**Saldo de DeepSeek Platform en el compositor de DeepSeek Harness.** Cada divisa con saldo de la cuenta vive en una píldora compacta en la fila del compositor, dentro del grupo centrado de píldoras; al pulsarla se abre un panel con el saldo recargado, el regalado y el total por divisa, el total combinado y los enlaces oficiales de uso y recarga.
 
 Sin configuración. El plugin usa la credencial `DEEPSEEK_API_KEY` que DSH ya tiene guardada — o la cuenta de DeepSeek con sesión iniciada si no hay clave. Sin cookies, sin scraping y sin página de ajustes.
 
@@ -21,7 +21,7 @@ Sin configuración. El plugin usa la credencial `DEEPSEEK_API_KEY` que DSH ya ti
 
 ![Píldora del saldo de DeepSeek en el compositor de DeepSeek Harness](assets/balance-pill.png)
 
-*La píldora compacta: la marca de DeepSeek y el saldo de cada divisa con saldo, separadas por `·`. Se coloca entre el control de permisos y el selector de modelo y solo se ve con un modelo de DeepSeek.*
+*La píldora compacta: la marca de DeepSeek y el saldo de cada divisa con saldo, separadas por `·`. Se une al grupo centrado de píldoras que usan los demás plugins de JaMoLpE88 y solo se ve con un modelo de DeepSeek; con varias píldoras visibles quedan una al lado de otra, centradas y con un pequeño margen.*
 
 ## Qué hace
 
@@ -33,6 +33,7 @@ Sin configuración. El plugin usa la credencial `DEEPSEEK_API_KEY` que DSH ya ti
 - Refresca el saldo cada 60 segundos y cuando la ventana vuelve a estar visible.
 - Aparece solo mientras el modelo activo pertenece a un provider de DeepSeek (`deepseek-official` o `deepseek-account`). Con otros providers no muestra nada.
 - Aparece en una sesión nueva y vacía antes del primer prompt, siguiendo el provider que muestra el selector de modelo del compositor.
+- Se une al grupo centrado de píldoras compartido con los demás plugins de composer de JaMoLpE88: con varias píldoras visibles quedan una al lado de otra, centradas y con un pequeño margen, y se ocultan juntas cuando la fila se queda sin sitio.
 
 ## Qué no hace
 
@@ -82,7 +83,7 @@ Recarga la ventana de DSH después de instalar. La píldora aparece en el compos
 ## Uso
 
 1. Selecciona un modelo del provider **DeepSeek**.
-2. La píldora aparece centrada en la fila del compositor, entre el control de permisos y el selector de modelo.
+2. La píldora aparece en la fila del compositor, dentro del grupo centrado de píldoras; las demás píldoras de JaMoLpE88 se colocan a su lado con un pequeño margen.
 3. Púlsala para abrir el panel de detalles.
 4. Usa **Refrescar** para una lectura inmediata; si no, el plugin se actualiza cada 60 segundos y al volver a la ventana.
 
@@ -151,6 +152,7 @@ Usa `/api/deepseek-balance/refresh` para saltarte la caché de 55 segundos y for
 | SO | Windows 11 (probado); macOS y Linux sin probar |
 | Perfil | `desktop` |
 | Provider | DeepSeek configurado en **Ajustes → Modelos**, o cuenta de DeepSeek con sesión iniciada |
+| Grupo de píldoras | Compartido con las demás píldoras de composer de JaMoLpE88 (centradas, una al lado de otra) |
 | Catálogo | [listado en dsh-plugin.org](https://dsh-plugin.org/plugins/jamolpe88/dsh-deepseek-balance) |
 | Página del proyecto | [jmolo.es/proyectos/dsh-deepseek-balance](https://jmolo.es/proyectos/dsh-deepseek-balance/) |
 
@@ -161,6 +163,7 @@ Sin validar: macOS, Linux, otras versiones de DSH y el perfil web.
 ## Límites
 
 - **Windows 11 es la única plataforma probada.** macOS y Linux no están validados.
+- **Comparte el grupo centrado de píldoras.** Cuando el compositor no puede con todas las píldoras visibles, el grupo se oculta entero en lugar de solaparse con el selector de modelo.
 - **Solo con DeepSeek.** Sin ese provider no hay datos útiles, así que el plugin no pinta nada.
 - **Sin caducidad.** DeepSeek informa del saldo regalado sin fecha; la cuenta atrás se descartó en lugar de inventarla.
 - **Dos divisas hoy.** DeepSeek documenta y devuelve `CNY` y `USD`; el plugin pinta cualquier código que reciba, con el propio código como símbolo cuando el navegador no lo conoce.

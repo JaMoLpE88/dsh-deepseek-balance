@@ -243,6 +243,102 @@ window.__ModuleLoader__.load({
       }, [open, setOpen, anchorRef, panelRef])
     }
 
+    // -----------------------------------------------------------------------
+    // Centered pill group (shared convention between the JaMoLpE88 pills)
+    // -----------------------------------------------------------------------
+
+    const CENTER_ATTR = 'data-dsh-center-pill'
+    const CENTER_ORDER_ATTR = 'data-dsh-center-pill-order'
+    const CENTER_GAP = 6
+    const CENTER_MARGIN = 24
+
+    /**
+     * Center every composer pill of the same host as one group. Each pill is
+     * absolutely positioned at 50%; this hook measures the visible siblings,
+     * sorts them by `data-dsh-center-pill-order`, and offsets its own anchor so
+     * the group stays centered with a small gap. It hides the group when it no
+     * longer fits, and re-runs when a pill mounts, unmounts or changes width.
+     *
+     * @param {{ current: HTMLElement | null }} ref
+     */
+    function useCenterPills(ref) {
+      React.useLayoutEffect(() => {
+        const self = ref.current
+        if (self === null) return
+        const host = self.offsetParent
+        if (host === null) return
+        let frame = 0
+        let resize = null
+
+        const collect = () => Array.from(host.querySelectorAll(`[${CENTER_ATTR}]`))
+          .filter((element) => element.offsetWidth > 0)
+          .sort((left, right) => {
+            const delta = Number(left.getAttribute(CENTER_ORDER_ATTR) ?? 0)
+              - Number(right.getAttribute(CENTER_ORDER_ATTR) ?? 0)
+            if (delta !== 0) return delta
+            return (left.getAttribute(CENTER_ATTR) ?? '').localeCompare(right.getAttribute(CENTER_ATTR) ?? '')
+          })
+
+        const place = () => {
+          frame = 0
+          const pills = collect()
+          const index = pills.indexOf(self)
+          if (index < 0) return
+          const widths = pills.map((element) => element.offsetWidth)
+          const total = widths.reduce((sum, width) => sum + width, 0) + CENTER_GAP * (pills.length - 1)
+          let before = 0
+          for (let cursor = 0; cursor < index; cursor += 1) before += widths[cursor] + CENTER_GAP
+          self.style.setProperty('--dsh-pill-shift', `${-total / 2 + before + widths[index] / 2}px`)
+          const hidden = total > host.clientWidth - CENTER_MARGIN
+          for (const element of pills) {
+            if (hidden) element.setAttribute('data-dsh-pill-hidden', '')
+            else element.removeAttribute('data-dsh-pill-hidden')
+          }
+        }
+
+        const schedule = () => {
+          if (frame !== 0) return
+          frame = window.requestAnimationFrame(place)
+        }
+
+        const watch = () => {
+          resize?.disconnect()
+          resize = new ResizeObserver(schedule)
+          resize.observe(host)
+          for (const element of collect()) resize.observe(element)
+        }
+
+        const mutations = new MutationObserver((records) => {
+          let relevant = false
+          for (const record of records) {
+            for (const node of [...record.addedNodes, ...record.removedNodes]) {
+              if (node.nodeType !== 1) continue
+              if (node.matches(`[${CENTER_ATTR}]`) || node.querySelector(`[${CENTER_ATTR}]`) !== null) {
+                relevant = true
+                break
+              }
+            }
+            if (relevant) break
+          }
+          if (!relevant) return
+          watch()
+          schedule()
+        })
+
+        mutations.observe(host, { childList: true, subtree: true })
+        watch()
+        place()
+        window.addEventListener('resize', schedule)
+        return () => {
+          window.cancelAnimationFrame(frame)
+          window.removeEventListener('resize', schedule)
+          mutations.disconnect()
+          resize?.disconnect()
+          self.style.removeProperty('--dsh-pill-shift')
+        }
+      }, [ref])
+    }
+
     /**
      * Fetch the host snapshot only while the pill is visible. Manual refreshes
      * bypass the host cache; automatic ones use it.
@@ -527,6 +623,7 @@ window.__ModuleLoader__.load({
       const [open, setOpen] = React.useState(false)
       const { anchorRef, panelRef, pos } = useAnchoredPanel(open)
       useDismiss(open, setOpen, anchorRef, panelRef)
+      useCenterPills(anchorRef)
 
       React.useEffect(() => {
         if (!active) setOpen(false)
@@ -576,6 +673,8 @@ window.__ModuleLoader__.load({
         ref: anchorRef,
         className: 'dsb-anchor',
         'data-dsb-anchor': '',
+        'data-dsh-center-pill': 'deepseek-balance',
+        'data-dsh-center-pill-order': '22',
       },
       h('button', {
         type: 'button',
@@ -613,13 +712,18 @@ window.__ModuleLoader__.load({
         position: absolute;
         left: 50%;
         bottom: 8px;
-        transform: translateX(-50%);
+        transform: translateX(calc(-50% + var(--dsh-pill-shift, 0px)));
+        transition: transform .18s ease;
         z-index: 20;
         display: inline-flex;
         pointer-events: auto;
       }
-      @container (width <= 620px) {
-        [data-dsb-anchor] { display: none; }
+      [data-dsb-anchor][data-dsh-pill-hidden] {
+        visibility: hidden;
+        pointer-events: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        [data-dsb-anchor] { transition: none; }
       }
 
       .dsb-logo {

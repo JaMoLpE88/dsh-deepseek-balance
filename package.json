@@ -1,6 +1,6 @@
 {
   "name": "@jamolpe88/dsh-deepseek-balance",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "DeepSeek Platform balance in the DeepSeek Harness composer: topped-up and granted balance per currency with a click-open details panel. Zero configuration.",
   "keywords": [
     "dsh",
