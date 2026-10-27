@@ -261,8 +261,9 @@ window.__ModuleLoader__.load({
      *
      * @param {{ current: HTMLElement | null }} ref
      */
-    function useCenterPills(ref) {
+    function useCenterPills(ref, active) {
       React.useLayoutEffect(() => {
+        if (!active) return
         const self = ref.current
         if (self === null) return
         const host = self.offsetParent
@@ -336,7 +337,7 @@ window.__ModuleLoader__.load({
           resize?.disconnect()
           self.style.removeProperty('--dsh-pill-shift')
         }
-      }, [ref])
+      }, [ref, active])
     }
 
     /**
@@ -623,7 +624,7 @@ window.__ModuleLoader__.load({
       const [open, setOpen] = React.useState(false)
       const { anchorRef, panelRef, pos } = useAnchoredPanel(open)
       useDismiss(open, setOpen, anchorRef, panelRef)
-      useCenterPills(anchorRef)
+      useCenterPills(anchorRef, active)
 
       React.useEffect(() => {
         if (!active) setOpen(false)
