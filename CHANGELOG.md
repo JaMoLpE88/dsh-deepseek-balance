@@ -12,18 +12,10 @@ All notable changes to `@jamolpe88/dsh-deepseek-balance` are documented here.
 - README: added the npm downloads badge.
 - No other runtime changes.
 
-## 0.1.3 — 2026-11-08
-
-- Repository hygiene: removed internal development artifacts and added ignore rules for local agent/planning files. No functional changes.
-
 ## 0.1.1 — 2026-10-27
 
 - The pill joins the shared centered pill group used by the other JaMoLpE88 composer plugins (OpenCode Go usage and DeepSeek rate clock). Several visible pills sit side by side, centered, with a small gap; they hide together when the composer cannot fit them, instead of overlapping the model selector.
 - README positioning notes updated. No other runtime changes.
-
-## 0.1.3 — 2026-11-08
-
-- Repository hygiene: removed internal development artifacts and added ignore rules for local agent/planning files. No functional changes.
 
 ## 0.1.0 — 2026-10-27
 
