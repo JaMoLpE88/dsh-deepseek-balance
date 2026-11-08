@@ -4,3 +4,15 @@ node_modules/
 .DS_Store
 Thumbs.db
 coverage/
+
+# Agent and planning artifacts (never committed)
+docs/superpowers/
+docs/plans/
+.superpowers/
+.research/
+.artifacts/
+.claude/
+.cursor/
+.codex/
+AGENTS.md
+CLAUDE.md
